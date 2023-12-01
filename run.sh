@@ -26,7 +26,10 @@ if [ ! -e ./env ]; then
 ## please consult https://github.com/dani-garcia/vaultwarden/wiki and
 ## https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
 ## for possible configuration values and their impact
-DOMAIN=https://vaultwarden."$hostname"."$domainname"
+##DOMAIN=https://vaultwarden."$hostname"."$domainname"
+
+
+DOMAIN=https://vaultwarden.running-co.de
 WEBSOCKET_ENABLED=true
 SIGNUPS_ALLOWED=true
 #INVITATIONS_ALLOWED=false
@@ -84,6 +87,8 @@ else
 	SSLCHAIN=""
 fi
 
+DOMAINNAME="running-co.de"
+
 cat <<-EOF >"/etc/apache2/sites-available/vaultwarden.conf"
 
 ###################################################################
@@ -91,7 +96,7 @@ cat <<-EOF >"/etc/apache2/sites-available/vaultwarden.conf"
 ###################################################################
 
 <VirtualHost *:80>
-        ServerName	vaultwarden.$hostname.$domainname
+        ServerName	vaultwarden.${DOMAINNAME}
 
         ErrorLog \${APACHE_LOG_DIR}/vaultwarden-error.log
         CustomLog \${APACHE_LOG_DIR}/vaultwarden-access.log combined
@@ -100,12 +105,12 @@ cat <<-EOF >"/etc/apache2/sites-available/vaultwarden.conf"
         RewriteEngine On
         RewriteCond %{REQUEST_URI} !^/.well-known/acme-challenge/
         RewriteCond %{HTTPS} !=on
-        RewriteRule ^/?(.*) https://vaultwarden.$hostname.$domainname/\$1 [R,L]
+        RewriteRule ^/?(.*) https://vaultwarden.${DOMAINNAME}/\$1 [R,L]
 </VirtualHost>
 
 <VirtualHost *:443>
         SSLEngine on
-        ServerName vaultwarden.$hostname.$domainname
+        ServerName vaultwarden.${DOMAINNAME}
 
         SSLCertificateFile ${SSLCERTIFICATE}
         SSLCertificateKeyFile ${SSLKEY}
