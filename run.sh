@@ -29,8 +29,8 @@ if [ ! -e ./env ]; then
 ##DOMAIN=https://vaultwarden."$hostname"."$domainname"
 
 
-DOMAIN=https://vaultwarden.running-co.de
-WEBSOCKET_ENABLED=true
+DOMAIN=https://vaultwarden. # todo: get real domain name
+#WEBSOCKET_ENABLED=true
 SIGNUPS_ALLOWED=true
 #INVITATIONS_ALLOWED=false
 #SMTP_HOST=$hostname.$domainname
@@ -87,7 +87,7 @@ else
 	SSLCHAIN=""
 fi
 
-DOMAINNAME="running-co.de"
+DOMAINNAME= #get real domain name
 
 cat <<-EOF >"/etc/apache2/sites-available/vaultwarden.conf"
 
