@@ -1,1 +1,1 @@
-docker exec -it bitwarden-rs /bin/bash
+docker exec -it vaultwarden /bin/bash
