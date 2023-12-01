@@ -1,14 +1,14 @@
 version: '3.5'
 services:
-  bitwarden-rs:
+  vaultwarden:
     build:
       context: https://github.com/dani-garcia/vaultwarden.git#${currenttag:-master}
     image: vaultwarden/server:${currenttag:-latest}
+    container_name: vaultwarden
     restart: always
     env_file: ./env
     ports:
       - "80:9080"
-      - "3012:3012"
     volumes:
-      - /var/lib/bitwarden_rs:/data/
+      - /var/lib/vaultwarden:/data/
       - /etc/localtime:/etc/localtime:ro
