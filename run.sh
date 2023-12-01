@@ -12,12 +12,12 @@ trap 'err_report $LINENO' ERR
 # install git to make the version lookup succeed
 dpkg -s git 2>/dev/null >/dev/null || univention-install git
 
-APP="bitwarden-rs"
+APP="vaultwarden"
 # get latest tagged image
 VERSION=$(git ls-remote --refs --tags https://github.com/dani-garcia/bitwarden_rs.git | sort -t '/' -k 3 -V | awk -F/ '{ print $3 }' | tail -1)
 docker_name="vaultwarden/server:$VERSION"
 #docker_name="vaultwarden/server:latest"
-data_dir="/var/lib/bitwarden_rs"
+data_dir="/var/lib/vaultwarden"
 
 eval "$(ucr shell hostname domainname)"
 
@@ -26,7 +26,7 @@ if [ ! -e ./env ]; then
 ## please consult https://github.com/dani-garcia/bitwarden_rs/wiki and
 ## https://github.com/dani-garcia/bitwarden_rs/blob/master/.env.template
 ## for possible configuration values and their impact
-DOMAIN=https://bitwarden."$hostname"."$domainname"
+DOMAIN=https://vaultwarden."$hostname"."$domainname"
 WEBSOCKET_ENABLED=true
 SIGNUPS_ALLOWED=true
 #INVITATIONS_ALLOWED=false
